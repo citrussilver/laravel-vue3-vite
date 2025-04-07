@@ -1,6 +1,12 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, useForm, usePage } from '@inertiajs/vue3';
+
+const user = usePage().props.auth.user;
+
+const form = useForm({
+    full_name: user.full_name
+});
 </script>
 
 <template>
@@ -21,7 +27,8 @@ import { Head } from '@inertiajs/vue3';
                     class="overflow-hidden bg-white shadow-sm sm:rounded-lg"
                 >
                     <div class="p-6 text-gray-900">
-                        You're logged in!
+                        <p>Hello {{ form.full_name }}!</p>
+                        <p>Welcome to your Dashboard.</p>
                     </div>
                 </div>
             </div>
