@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import FormInputLabel from '@/Components/FormInputLabel.vue';
-import ElementGrouper from '@/Components/ElementsGrouper.vue';
+import ElementsGrouper from '@/Components/ElementsGrouper.vue';
 import FormLabel from '@/Components/FormLabel.vue';
 import BlockWideElementsGrouper from '@/Components/BlockWideElementsGrouper.vue';
 import { Head, Link } from '@inertiajs/vue3';
@@ -31,18 +31,18 @@ defineProps({
                     <div class="relative w-full max-w-2xl max-h-full">
                         <div class="p-6 space-y-6">
                             <div class="grid grid-cols-6 gap-6">
-                                <ElementGrouper>
+                                <ElementsGrouper>
                                     <FormInputLabel for="full_name" value="Full name" />
                                     <FormLabel>{{ user.full_name }}</FormLabel>                     
-                                </ElementGrouper>
-                                <ElementGrouper>
+                                </ElementsGrouper>
+                                <ElementsGrouper>
                                     <FormInputLabel for="email" value="Email" />
                                     <FormLabel>{{ user.email }}</FormLabel>
-                                </ElementGrouper>
-                                <ElementGrouper>
+                                </ElementsGrouper>
+                                <ElementsGrouper>
                                     <FormInputLabel for="role" value="Role" />
                                     <FormLabel>{{ user.role.name }}</FormLabel>
-                                </ElementGrouper>
+                                </ElementsGrouper>
 
                                 <BlockWideElementsGrouper>
                                     <Link :href="route('users.edit', user.id)" class="text-white bg-jp-indigo hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Edit</Link>

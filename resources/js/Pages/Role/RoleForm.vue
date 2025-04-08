@@ -1,14 +1,19 @@
 <script setup>
-defineProps({
+import FormInputLabel from '@/Components/FormInputLabel.vue';
+import TextInput from '@/Components/TextInput.vue';
+import AltButton from '@/Components/AltButton.vue';
+import BlockWideElementsGrouper from '@/Components/BlockWideElementsGrouper.vue';
+import { Link } from '@inertiajs/vue3';
+
+const props = defineProps({
     form: {
         type: Object,
         required: true
     },
-    roles: {
-        type: Array,
-        required: true
+    operation: {
+        type: String,
     }
-})
+});
 
 // call in template
 const emit = defineEmits(['submit'])
@@ -40,9 +45,9 @@ const emit = defineEmits(['submit'])
                         :class="{ 'opacity-25': form.processing }"
                         :disabled="form.processing"
                     >
-                        Save
+                        {{ operation }}
                     </AltButton>
-                    <Link :href="route('roles.index')" as="button" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5">Cancel</Link>
+                    <Link :href="route('roles.index')" as="button" :disabled="form.processing" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5">Cancel</Link>
                 </BlockWideElementsGrouper>
             </div>
         </div>

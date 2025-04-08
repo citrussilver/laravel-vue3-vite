@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Middleware\SetUserTheme;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -20,7 +21,7 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth')->middleware(SetUserTheme::class)->group(function () {
     Route::resource('/users', UserController::class);
     Route::resource('/roles', RoleController::class);
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

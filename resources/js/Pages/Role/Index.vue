@@ -1,11 +1,9 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
-import { getUser } from '@/functions/helpers.js'
+import { Head, Link, useForm, router } from '@inertiajs/vue3';
+import { getUser, deleteRow } from '@/functions/helpers.js'
 
 const user = getUser();
-
-console.log(user)
 
 const form = useForm({
     role_id: user.role_id
@@ -62,9 +60,9 @@ defineProps({
                                         {{ role.description }}
                                     </td>
                                     <td class="px-6 py-4 space-x-2" v-if="form.role_id == 1">
-                                        <Link :href="route('roles.show', role.id)"  class="font-medium text-gray-600 hover:underline px-4">Show</Link>
-                                        <Link :href="route('roles.edit', role.id)" class="font-medium text-blue-600 hover:underline px-4">Edit</Link>
-                                        <a href="#" class="font-medium text-red-600 hover:underline px-4">Delete</a>
+                                        <Link :href="route('roles.show', role.id)"  class="font-medium text-gray-600 hover:underline pr-4">Show</Link>
+                                        <Link :href="route('roles.edit', role.id)" class="font-medium text-blue-600 hover:underline pr-4">Edit</Link>
+                                        <a href="#" class="font-medium text-red-600 hover:underline" @click.prevent="deleteRow(role, 'roles')">Delete</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -72,7 +70,7 @@ defineProps({
 
                         <!-- Temporary Pagination Template -->
                         <nav class="flex items-center flex-column flex-wrap md:flex-row justify-between py-2 px-4" aria-label="Table navigation">
-                            <span class="text-sm font-normal text-gray-700 mb-4 md:mb-0 block w-full md:inline md:w-auto">Showing <span class="font-semibold text-gray-700">1-3</span> of <span class="font-semibold text-gray-700">1</span></span>
+                            <span class="text-sm font-normal text-gray-700 mb-4 md:mb-0 block w-full md:inline md:w-auto">Showing <span class="font-semibold text-gray-700">1-{{ roles.length }}</span> of <span class="font-semibold text-gray-700">1</span></span>
                             <ul class="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
                                 <li>
                                     <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 hover:text-gray-700">1</a>
