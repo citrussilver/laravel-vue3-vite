@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
-import { getUser } from '@/functions/helpers.js'
+import { Head, Link, useForm, router } from '@inertiajs/vue3';
+import { getUser, deleteRow } from '@/functions/helpers.js'
 
 const user = getUser();
 
@@ -69,9 +69,9 @@ defineProps({
                                         {{ user.role.name }}
                                     </td>
                                     <td class="px-6 py-4 space-x-2" v-if="form.role_id == 1">
-                                        <Link :href="route('users.show', user.id)" class="font-medium text-gray-600 hover:underline">Show</Link>
-                                        <Link :href="route('users.edit', user.id)"  class="font-medium text-blue-600 hover:underline">Edit</Link>
-                                        <a href="#" class="font-medium text-red-600 hover:underline">Delete</a>
+                                        <Link :href="route('users.show', user.id)" class="font-medium text-gray-600 hover:underline pr-4">Show</Link>
+                                        <Link :href="route('users.edit', user.id)" class="font-medium text-blue-600 hover:underline pr-4">Edit</Link>
+                                        <a href="#" class="font-medium text-red-600 hover:underline" @click.prevent="deleteRow(user, 'users')">Delete</a>
                                     </td>
                                 </tr>
                             </tbody>

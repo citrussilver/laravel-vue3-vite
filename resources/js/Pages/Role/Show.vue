@@ -2,7 +2,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import FormInputLabel from '@/Components/FormInputLabel.vue';
 import AltButton from '@/Components/AltButton.vue';
-import ElementGrouper from '@/Components/ElementsGrouper.vue';
+import ElementsGrouper from '@/Components/ElementsGrouper.vue';
 import FormLabel from '@/Components/FormLabel.vue';
 import BlockWideElementsGrouper from '@/Components/BlockWideElementsGrouper.vue';
 import { Head, useForm, Link  } from '@inertiajs/vue3';
@@ -35,10 +35,10 @@ defineProps({
                         <form class="relative bg-white rounded-lg shadow" @submit.prevent="update">
                             <div class="p-6 space-y-6">
                                 <div class="grid grid-cols-6 gap-6">
-                                    <ElementGrouper>
+                                    <ElementsGrouper>
                                         <FormInputLabel for="name" value="Role name" />
                                         <FormLabel>{{ role.name }}</FormLabel>
-                                    </ElementGrouper>
+                                    </ElementsGrouper>
 
                                     <div class="col-span-6 sm:col-span-6">
                                         <FormInputLabel for="description" value="Description" />

@@ -67,7 +67,7 @@ class RoleController extends Controller
     public function update(RoleRequest $request, Role $role)
     {
 
-        $role->update($request->toArray());
+        $role->update($request->validated());
 
         return redirect()->route('roles.index');
     }
@@ -75,8 +75,10 @@ class RoleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Role $role)
     {
-        //
+        $role->delete();
+
+        return back();
     }
 }
