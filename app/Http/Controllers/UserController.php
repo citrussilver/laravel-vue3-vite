@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\User;
+use App\Http\Resources\RoleResource;
+use App\Models\Role;
+use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -26,7 +31,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('User/Create', [
+            // get roles for dropdown
+            'roles' => RoleResource::collection(Role::all())
+        ]);
     }
 
     /**
@@ -34,31 +42,64 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'full_name' => 'required|string|max:255',
+            'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+
+        User::create([
+            'full_name' => $request->full_name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role_id' => $request->role_id,
+            'nominated_password' => Hash::make($request->password),
+            'confirmed_password' => Hash::make($request->password),
+            // 'role_id' => 2
+        ]);
+
+        return redirect()->route('users.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(User $user)
     {
-        //
+        // $user = auth()->user()->getById($id);
+        return inertia('User/Show', [
+            'user' => UserResource::make($user)
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(User $user)
     {
-        //
+        return Inertia::render('User/Edit', [
+            // get roles for dropdown
+            'roles' => RoleResource::collection(Role::all()),
+            'user' => UserResource::make($user)
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UserRequest $request, User $user)
     {
-        //
+        // utilize UserRequest to make validated() method work
+        $user->update($request->validated());
+
+        // long version
+        // $user->update([
+        //     'full_name' => $request->get('full_name'),
+        //     'email' => $request->get('email'),
+        //     'role_id' => $request->get('role_id')
+        // ]);
+
+        return redirect()->route('users.index');
     }
 
     /**

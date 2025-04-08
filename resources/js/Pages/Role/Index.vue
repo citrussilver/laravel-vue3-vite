@@ -1,6 +1,15 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, Link, useForm } from '@inertiajs/vue3';
+import { getUser } from '@/functions/helpers.js'
+
+const user = getUser();
+
+console.log(user)
+
+const form = useForm({
+    role_id: user.role_id
+});
 
 defineProps({
     roles: {
@@ -25,10 +34,13 @@ defineProps({
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900">Manage Roles</div>
+                    <div class="m-4 flex justify-between" v-if="form.role_id == 1">
+                        <div class="text-gray-900">Manage Roles</div>
+                        <Link :href="route('roles.create')" class="bg-ceil hover:bg-jp-indigo px-4 py-1 rounded-full text-white active:translate-y-1">Add New Role</Link>
+                    </div>
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <table class="w-full text-sm text-left rtl:text-right text-gray-500">
-                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 border-b">
+                            <thead class="text-xs text-jp-indigo uppercase bg-azureish-white border-b">
                                 <tr>
                                     <th scope="col" class="px-6 py-3">
                                         Role Name
@@ -36,7 +48,7 @@ defineProps({
                                     <th scope="col" class="px-6 py-3">
                                         Description
                                     </th>
-                                    <th scope="col" class="px-6 py-3">
+                                    <th scope="col" class="px-6 py-3" v-if="form.role_id == 1">
                                         Action
                                     </th>
                                 </tr>
@@ -49,10 +61,10 @@ defineProps({
                                     <td class="px-6 py-4">
                                         {{ role.description }}
                                     </td>
-                                    <td class="px-6 py-4 space-x-2">
-                                        <a href="#" class="font-medium text-gray-600 hover:underline">Show</a>
-                                        <a href="#" class="font-medium text-blue-600 hover:underline">Edit</a>
-                                        <a href="#" class="font-medium text-red-600 hover:underline">Delete</a>
+                                    <td class="px-6 py-4 space-x-2" v-if="form.role_id == 1">
+                                        <Link :href="route('roles.show', role.id)"  class="font-medium text-gray-600 hover:underline px-4">Show</Link>
+                                        <Link :href="route('roles.edit', role.id)" class="font-medium text-blue-600 hover:underline px-4">Edit</Link>
+                                        <a href="#" class="font-medium text-red-600 hover:underline px-4">Delete</a>
                                     </td>
                                 </tr>
                             </tbody>
