@@ -17,15 +17,15 @@ class RoleSeeder extends Seeder
 
         $roles = collect([
             [
-                'role_name' => 'Admin',
+                'name' => 'Admin',
                 'description' => 'Admin access'
             ],
             [
-                'role_name' => 'User',
+                'name' => 'User',
                 'description' => 'General user access'
             ],
             [
-                'role_name' => 'Guest',
+                'name' => 'Guest',
                 'description' => 'Guest user access'
             ]
         ]);

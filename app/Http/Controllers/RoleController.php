@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RoleRequest;
 use App\Http\Resources\RoleResource;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -24,7 +25,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Role/Create', []);
     }
 
     /**
@@ -32,31 +33,43 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Role::create([
+            'name' => $request->name,
+            'description' => $request->description
+        ]);
+
+        return redirect()->route('roles.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Role $role)
     {
-        //
+        return inertia('Role/Show', [
+            'role' => RoleResource::make($role)
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Role $role)
     {
-        //
+        return Inertia::render('Role/Edit', [
+            'role' => RoleResource::make($role)
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(RoleRequest $request, Role $role)
     {
-        //
+
+        $role->update($request->toArray());
+
+        return redirect()->route('roles.index');
     }
 
     /**

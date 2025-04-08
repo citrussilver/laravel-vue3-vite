@@ -1,8 +1,9 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, useForm, usePage } from '@inertiajs/vue3';
+import { getUser } from '@/functions/helpers.js';
 
-const user = usePage().props.auth.user;
+const user = getUser();
 
 const form = useForm({
     full_name: user.full_name
