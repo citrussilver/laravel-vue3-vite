@@ -19,6 +19,7 @@ class SetUserTheme
         $r = $next($request);
 
         $user = $request->user();
+        $user->theme = 'dark';
         $u = str_replace('<html lang="en">', '<html lang="en" class="' . $user->theme . '">', $r->getContent());
         $r->setContent($u);
 
